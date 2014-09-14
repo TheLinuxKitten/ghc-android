@@ -98,3 +98,4 @@ Running these commands will make a Debian stable chroot and build in there.
 	cd ghc-android
 	git checkout stable-ghc-snapshot
 	./build
+	./build --x86
