@@ -211,14 +211,17 @@ popd
 popd
 popd
 
+GHC_VER=7.8.2
+GHC_TAR_FILE=ghc-${GHC_VER}-src.tar.bz2
+GHC_TAR_PATH="${TARDIR}/${GHC_TAR_FILE}"
 if ! [ -e "$GHC_STAGE0" ] ; then
-	if [ ! -d "$GHC_STAGE0_SRC" ]; then
-    if ! [ -e ghc-7.8.2-src.tar.bz2 ] ; then
-        # Checkout GHC
-        wget http://www.haskell.org/ghc/dist/7.8.2/ghc-7.8.2-src.tar.bz2
+  if [ ! -d "$GHC_STAGE0_SRC" ]; then
+    if ! [ -e "${GHC_TAR_PATH}" ] ; then
+	# Checkout GHC
+	curl -o "${GHC_TAR_PATH}" http://www.haskell.org/ghc/dist/${GHC_VER}/${GHC_TAR_FILE}
     fi
-    tar xf ghc-7.8.2-src.tar.bz2
-    mv ghc-7.8.2 "$GHC_STAGE0_SRC"
+    tar xf "${GHC_TAR_PATH}"
+    mv "ghc-${GHC_VER}" "$GHC_STAGE0_SRC"
     pushd "$GHC_STAGE0_SRC" > /dev/null
 
     # Setup build.mk
@@ -228,9 +231,9 @@ BUILD_DOCBOOK_HTML = NO
 BUILD_DOCBOOK_PS   = NO
 BUILD_DOCBOOK_PDF  = NO
 EOF
-	else
+  else
     pushd "$GHC_STAGE0_SRC" > /dev/null
-	fi
+  fi
 
     # Configure
     perl boot
@@ -243,8 +246,8 @@ fi
 
 if ! [ -d "$GHC_SRC" ] ; then
     # Checkout GHC
-    tar xf ghc-7.8.2-src.tar.bz2
-    mv ghc-7.8.2 "$GHC_SRC"
+    tar xf "${GHC_TAR_PATH}"
+    mv "ghc-${GHC_VER}" "$GHC_SRC"
     apply_patches 'ghc-*' "$GHC_SRC"
     pushd "$GHC_SRC" > /dev/null
 
