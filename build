@@ -17,9 +17,12 @@ if [ -z "$MIRROR_OPT" ] ; then
 fi
 
 # Basic parameters
-NDK_RELEASE=${NDK_RELEASE:-r9b}
-NDK_MD5=d7f783deaeea6b60cb515d9427c01c2e
-NDK_PLATFORM=${NDK_PLATFORM:-android-14}
+#NDK_RELEASE=${NDK_RELEASE:-r9b}
+#NDK_MD5=d7f783deaeea6b60cb515d9427c01c2e
+#NDK_PLATFORM=${NDK_PLATFORM:-android-14}
+NDK_RELEASE=${NDK_RELEASE:-r10b}
+NDK_MD5=e8f55daa5c9de7ab79aaaf5d7d751b69
+NDK_PLATFORM=${NDK_PLATFORM:-android-19}
 
 if [ "x$1" == "x--x86" ] ; then
     NDK_TOOLCHAIN=${NDK_TOOLCHAIN:-x86-4.8}
