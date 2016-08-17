@@ -25,10 +25,12 @@ if [ "x$1" == "x--x86" ] ; then
     NDK_TOOLCHAIN=${NDK_TOOLCHAIN:-x86-4.8}
     NDK_TARGET=${NDK_TARGET:-i686-linux-android}
     ARCH_OPTS=""
+    GNUTLS_CC="i686-linux-android-gcc -fgnu89-inline"
 else
     NDK_TOOLCHAIN=${NDK_TOOLCHAIN:-arm-linux-androideabi-4.8}
     NDK_TARGET=${NDK_TARGET:-arm-linux-androideabi}
     ARCH_OPTS="-fllvm"
+    GNUTLS_CC="arm-linux-androideabi-gcc -fgnu89-inline"
 fi
 
 NDK_DESC=$NDK_PLATFORM-$NDK_TOOLCHAIN
@@ -214,7 +216,7 @@ make install
 popd
 pushd gnutls26*
 patch -p1 <$BASEDIR/patches/gnutls-no-atfork.patch
-./configure --without-p11-kit --prefix="$NDK_ADDON_PREFIX" --host=$NDK_TARGET --build=$BUILD_ARCH CC="arm-linux-androideabi-gcc -fgnu89-inline" --enable-static --disable-shared --with-included-libtasn1
+./configure --without-p11-kit --prefix="$NDK_ADDON_PREFIX" --host=$NDK_TARGET --build=$BUILD_ARCH CC="$GNUTLS_CC" --enable-static --disable-shared --with-included-libtasn1
 pushd lib
 make $MAKEFLAGS
 make install
@@ -225,7 +227,7 @@ popd
 if ! [ -e "$GHC_STAGE0" ] ; then
 	if [ ! -d "$GHC_STAGE0_SRC" ]; then
     # Checkout GHC
-    wget http://www.haskell.org/ghc/dist/7.8.2/ghc-7.8.2-src.tar.bz2
+    wget -nc http://www.haskell.org/ghc/dist/7.8.2/ghc-7.8.2-src.tar.bz2
     tar xf ghc-7.8.2-src.tar.bz2
     mv ghc-7.8.2 "$GHC_STAGE0_SRC"
     pushd "$GHC_STAGE0_SRC" > /dev/null
