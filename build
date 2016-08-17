@@ -227,7 +227,7 @@ popd
 if ! [ -e "$GHC_STAGE0" ] ; then
 	if [ ! -d "$GHC_STAGE0_SRC" ]; then
     # Checkout GHC
-    wget http://www.haskell.org/ghc/dist/7.8.2/ghc-7.8.2-src.tar.bz2
+    wget -nc http://www.haskell.org/ghc/dist/7.8.2/ghc-7.8.2-src.tar.bz2
     tar xf ghc-7.8.2-src.tar.bz2
     mv ghc-7.8.2 "$GHC_STAGE0_SRC"
     pushd "$GHC_STAGE0_SRC" > /dev/null
