@@ -71,7 +71,7 @@ Comments, patches and success reports are welcome.
 
 Running these commands will make a Debian jessie chroot and build in there.
 
-	debootstrap --arch=i386 stable debian-jessie-android
+	debootstrap --arch=i386 jessie debian-jessie-android
 	chroot debian-jessie-android
 
 	mount -t proc proc /proc
